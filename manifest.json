@@ -1,0 +1,32 @@
+{
+
+  "manifest_version": 2,
+  "name": "History Search",
+  "version": "1.0",
+
+  "description": "lets you search your browser history to help you find the page you are Searching for.",
+
+  "icons": {
+    "48": "icons/round-search-24px.svg"
+  },
+  "browser_action": {
+    "default_title": "history_search",
+    "default_icon": "./icons/round-search-24px.svg",
+    "default_popup": "./popup/popup.html"
+  },
+  "permissions": [
+      "activeTab",
+      "history"
+    ],
+  "content_scripts": [
+    {
+      "matches": ["*://*.google.com/*"],
+      "js": ["borderify.js"]
+    }
+  ],
+
+  "background": {
+    "scripts": ["history_search.js"]
+  }
+
+}
