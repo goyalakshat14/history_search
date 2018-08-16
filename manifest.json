@@ -21,7 +21,6 @@
   "content_scripts": [
     {
       "matches": ["*://*.google.com/*"],
-      "js": ["borderify.js"]
     }
   ],
 

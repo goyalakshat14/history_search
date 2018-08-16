@@ -29,8 +29,15 @@
 
   <div id="middle">
 
+    <div id="nothing" style="display: none">
+      <p style="text-align: center"> nothing found </p>
+    </div>
+    <div id="notReady" style="display: none;">
+      <p style="text-align: center;"> not ready try again after some time</p>
+    </div>
     <div id="resultsList" style="display:none">
     </div>
+
 
     <div id="helpTips" style="display:none">
       <h1>Fuzbal
@@ -58,7 +65,8 @@
       {{#msg}}
       <p>{{numResults}} matches</p>
       {{#resultsBeforeSelected}}
-      <span id="{{id}}" class="resultItem"><li><b>{{thisResult}}: </b>{{{context}}}</li></span>
+      <span id="{{id}}" class="resultItem"><li><a href={{url}}>{{{title}}}</a></li></span>
+      <!-- <span  class="resultItem"><li><a href={{.}}>{{.}}</a></li></span> -->
       {{/resultsBeforeSelected}}
       {{#resultsSelected}}
       <span id="{{id}}" class="resultItem"><li><b><span style="background-color:#00FF00">{{thisResult}}</span>: </b>{{{context}}}</li></span>

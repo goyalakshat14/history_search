@@ -1,70 +1,54 @@
 
+var index = {};
+var terms = {};
 //for populating the dictionary of words in the history
 function onGot(historyItems) {
-  for (item of historyItems) {
-    console.log(item)
-    // console.log(item.url);
-    // console.log(item.title);
-    
-    var xhttp = new XMLHttpRequest();
-  	xhttp.onload = function() {
-      console.log(this.status);
-    	if (this.readyState == 4 && this.status == 200) {
-        // console.log(this.responseText)
-        var splitted = this.responseText.split("\n")
-    	  for(var line in splitted){
-          var temp = splitted[line].split(" ")
-         for(var text in temp){
-            // console.log(temp[text]); 
-            if(temp[text] in index){
-              index[temp[text]][item.lastVisitTime] = item;
-            }
-            else{
-              index[temp[text]] = {};
-              index[temp[text]][item.lastVisitTime] = item;
-            }
-        }
-      }
-      
-    	}
-    };
+  urls = []
 
-    xhttp.open("GET", "http://127.0.0.1:5000/?url="+item.url, true);
-  	
-    console.log("sending request");
-  	xhttp.send(null);
+  for (const [ key, value ] of Object.entries(historyItems)){
+    urls.push(value)
   }
-  ready = true;
 
+  var xhttp = new XMLHttpRequest();
+  xhttp.onload = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      // var strings = JSON.parse(this.responseText)
+      console.log(this.responseText)
+    }
+  };
+
+  xhttp.open("POST", "http://127.0.0.1:5000/", true);
+  jo = {"urls":urls}
+  xhttp.setRequestHeader("Content-Type", "application/json");
+  xhttp.send(JSON.stringify(jo));
 }
-var ready = false
-
-var index = {};
 
 var searching = browser.history.search({
    text: "",
    startTime: 0,
-   maxResults: 50
+   maxResults: 1000
 });
 
 searching.then(onGot);
 
+var lastMsg={};
 
-//for listening to any request
 browser.runtime.onMessage.addListener(function(request,sender,sendResponse){
-  console.log(ready);
-  if(request.type == "search" && ready ==true)
-  {
 
-    console.log("yoho someone needs to know I am alive :"+request.greeting);
-    console.log(request.query)
-    console.log(index)
-    if(request.query in index){
-      console.log("hello")
-      console.log(index[request.query])
-      sendResponse({msg:index[request.query]});
-    }
-    // sendResponse({msg:"I am fine my darling"});
+  if(request.type == "save"){
+    // console.log("I am in save");
+  // console.log(request.msg)
+    lastMsg = request.msg
   }
-    sendResponse("not ready");
 });
+
+browser.runtime.onMessage.addListener(function(request,sender,sendResponse){
+  
+  if(request.type == "retr")
+  {
+    // console.log("I am in retr");
+    sendResponse(lastMsg)
+  }  
+  
+});
+  
