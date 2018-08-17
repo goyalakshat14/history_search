@@ -29,9 +29,9 @@ function updateResultsInPopup(msg) {
 	lastMsg = msg; // Save message (to be used when popup is reopened on a tab).
 	// resultSelectedIndex = 0; // Set first result to be the active result (in green).
 	
-	console.log(lastSearchText)
+	// console.log(lastSearchText)
 	toSave = {'lastMsg' : msg.msg, "lastSearchText" : lastSearchText}
-	console.log(toSave)
+	// console.log(toSave)
 	var sending = browser.runtime.sendMessage({type: "save",
     	msg:toSave
   	});
@@ -48,8 +48,8 @@ function render(msg) {
 	var resultsSelected = [];
 	var resultsAfterSelected = [];
 	for (var i = 0; i < msg.msg.length; i++) {
-		if(msg.msg[i].title == "")
-			msg.msg[i].title = msg.msg[i].url
+		if(msg.msg[i][0] == "")
+			msg.msg[i][0] = msg.msg[i][1]
 
 		resultsBeforeSelected.push(msg.msg[i])
 	}
