@@ -1,8 +1,8 @@
 # The extension that enables you to remember the forgotten
 
-1. for_fetching_page.py is the python server that processes the query and have the index of all the websites in your history.
-2. manifest.json is the config file of your extension.
-3. history_search.js is the backgrund script of extension that feed history links to firefox.
+1. `for_fetching_page.py` is the python server that processes the query and have the index of all the websites in your history.
+2. `manifest.json` is the config file of your extension.
+3. `history_search.js` is the backgrund script of extension that feed history links to firefox.
 4. popup directory contains all the files related to the pop where you enter your query.
 5. To run this extension first start the python server with :-  
 	`python for_fetching_page.py`
